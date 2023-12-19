@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cockroachdb
+spec:
+  serviceName: "cockroachdb"
+  replicas: 3  # You can adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: cockroachdb
+  template:
+    metadata:
+      labels:
+        app: cockroachdb
+    spec:
+      containers:
+      - name: cockroachdb
+        # image: cockroachdb/cockroach:v21.1.12  # Use the appropriate CockroachDB version
+        image: cockroachdb/cockroach:latest
+        ports:
+        - containerPort: 26257  # CockroachDB default port
+          name: grpc
+        - containerPort: 8080  # CockroachDB admin UI
+          name: http
+        volumeMounts:
+        - name: cockroachdb-data
+          mountPath: /cockroach/cockroach-data
+  volumeClaimTemplates:
+  - metadata:
+      name: cockroachdb-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi  # Adjust storage as needed
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cockroachdb-public
+spec:
+  ports:
+    - port: 26257
+      targetPort: 26257
+  selector:
+    app: cockroachdb
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cockroachdb
+spec:
+  clusterIP: None
+  ports:
+    - port: 26257
+  selector:
+    app: cockroachdb
