@@ -1,9 +1,6 @@
 import requests
-# Run 'python -m pip install "pymongo[srv]"' to use this
+# Run 'pip install "pymongo"' to use this
 import pymongo
-
-# Imports
-import requests
 #import json
 
 # Declare Variables
@@ -36,15 +33,24 @@ if login_response.status_code == 200:
 else:
     print(login_response.status_code)
 
-# Assuming you have some output from your Job
-job_output = {"result": posture_response.text}
+# MongoDB connection details
+mongo_host = "mongodb-service"
+mongo_port = 27017
+mongo_db_name = "mongodb"
+mongo_collection_name = "escape-room"
 
-# Example of storing the output in a database using API (replace URL and payload accordingly)
-db_url = "http://database-service:port/store"
-response = requests.post(db_url, json=job_output)
+# Sample data to insert into MongoDB
+data_to_insert = [
+    {"output": posture_response.text}
+]
 
-# Check the response
-if response.status_code == 200:
-    print("Output stored in the database.")
-else:
-    print("Failed to store output in the database.")
+# MongoDB connection
+client = pymongo.MongoClient(host=mongo_host, port=mongo_port)
+db = client[mongo_db_name]
+collection = db[mongo_collection_name]
+
+# Insert data into MongoDB collection
+result = collection.insert_many(data_to_insert)
+
+# Print the inserted document IDs
+print("Inserted IDs:", result.inserted_ids)

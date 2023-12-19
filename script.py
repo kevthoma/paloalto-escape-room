@@ -31,3 +31,16 @@ if login_response.status_code == 200:
 # Bad username/password
 else:
     print(login_response.status_code)
+
+# # Get output from job
+# job_output = {"result": posture_response.text}
+
+# # Store output in database
+# db_url = "http://database-service:port/store"
+# response = requests.post(db_url, json=job_output)
+
+# # Error Checking
+# if response.status_code == 200:
+#     print("Output stored in the database.")
+# else:
+#     print("Failed to store output in the database.")
