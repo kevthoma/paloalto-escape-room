@@ -5,7 +5,7 @@ FROM python:latest
 RUN pip install requests
 
 # Install 'json' Python module
-RUN pip install json
+# RUN pip install json
 
 # Set the working directory in the container
 WORKDIR /app
