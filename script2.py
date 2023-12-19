@@ -1,4 +1,6 @@
 import requests
+# Run 'python -m pip install "pymongo[srv]"' to use this
+import pymongo
 
 # Imports
 import requests
