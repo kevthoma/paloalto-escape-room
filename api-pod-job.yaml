@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: api-pod-job
+spec:
+  completions: 1  # Set the number of completions to 1 for a single run
+  template:
+    metadata:
+      labels:
+        app: api-pod
+    spec:
+      containers:
+      - name: api-pod-container
+        image: api-pod-image  # Use the name of your Docker image
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80  # Port on which your Python application runs (if applicable)
+      restartPolicy: Never  # Ensure it does not restart upon completion

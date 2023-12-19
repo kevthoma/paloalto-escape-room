@@ -13,4 +13,4 @@ docker pull python:latest
 docker build -t api-pod-image .
 
 # Deploy on minikube
-kubectl apply -f api-pod-deployment.yaml
+kubectl apply -f api-pod-job.yaml
