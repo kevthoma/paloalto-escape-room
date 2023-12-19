@@ -10,7 +10,7 @@ eval $(minikube docker-env)
 docker pull python:latest
 
 # Build Docker Image
-docker build -t escape-room-image .
+docker build -t api-pod-image .
 
 # Deploy on minikube
-kubectl apply -f escape-room-deployment.yaml
+kubectl apply -f api-pod-deployment.yaml
