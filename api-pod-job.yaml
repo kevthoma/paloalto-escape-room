@@ -13,6 +13,13 @@ spec:
       - name: api-pod-container
         image: api-pod-image  # Use the name of your Docker image
         imagePullPolicy: IfNotPresent
+        env:
+        - name: MYSQL_HOST
+          value: mysql-service  # Replace with your MySQL service name
+        - name: MYSQL_USER
+          value: your_mysql_user
+        - name: MYSQL_PASSWORD
+          value: your_mysql_password
         ports:
         - containerPort: 80  # Port on which your Python application runs (if applicable)
       restartPolicy: Never  # Ensure it does not restart upon completion
