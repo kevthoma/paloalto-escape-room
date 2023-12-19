@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: escape-room-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: escape-room
+  template:
+    metadata:
+      labels:
+        app: escape-room
+    spec:
+      containers:
+      - name: escape-room-container
+        image: escape-room-image  # Use the name of your Docker image
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80  # Port on which your Python application runs (if applicable)
